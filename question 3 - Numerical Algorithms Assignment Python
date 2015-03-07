@@ -1,0 +1,51 @@
+class PolynomialSolver:
+	def solve(self,order,coeffs,method):
+		def f(x):
+			sum=0
+			for i in range(order+1):
+				sum+=coeffs[i]*(x**(order-i))
+			return sum
+		if method=='bisection':
+			l=int(input('Enter lower bound of interval in which root lies: '))
+			u=int(input('Enter upper bound of interval in which root lies: '))
+			it=int(input('Enter maximum number of iterations: '))
+			tolerance=float(input('Enter a tolerance value to define accuracy: '))
+			while(abs(f(l)-f(u))>tolerance and it>0):
+				m=(l+u)/2
+				if(f(l)*f(m)<0):
+					u=m
+				else:
+					l=m
+				print (l,u,f(l),f(u))
+				it-=1
+			return [l,u]
+		if method=='secant':
+			l=int(input('Enter lower bound of interval in which root lies: '))
+			u=int(input('Enter upper bound of interval in which root lies: '))
+			it=int(input('Enter maximum number of iterations: '))
+			tolerance=float(input('Enter a tolerance value to define accuracy: '))
+			while(abs(f(l))>tolerance and it>0):
+				f1=f(l)
+				f2=f(u)
+				l,u=u,u-(((u-l)*f2)/(f2-f1))
+				print (l,u,f1,f2)
+				it-=1
+			return l
+		if method=='secantRF':
+			l=int(input('Enter lower bound of interval in which root lies: '))
+			u=int(input('Enter upper bound of interval in which root lies: '))
+			m=l
+			it=int(input('Enter maximum number of iterations: '))
+			tolerance=float(input('Enter a tolerance value to define accuracy: '))
+			while(abs(f(m))>tolerance and it>0):
+				f1=f(l)
+				f2=f(u)
+				m=u-(((u-l)*f2)/(f2-f1))
+				fm=f(m)
+				if(f1*fm<0):
+					u=m
+				else:
+					l=m
+				print (m)
+				it-=1
+			return l
