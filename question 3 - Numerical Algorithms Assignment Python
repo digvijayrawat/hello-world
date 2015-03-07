@@ -52,7 +52,7 @@ class PolynomialSolver:
                 if method=='newtonraphson':
 			x=float(input('Enter value for initialisation: '))
 			max_iterations=int(input('Enter maximum number of iterations: '))
-			tolerance=float(input('Enter tolerance: '))
+			tolerance=float(input('Enter tolerance to define accuracy: '))
 			def derivative(x):
 				sum=0
 				for i in range(1,order+1):
