@@ -49,3 +49,23 @@ class PolynomialSolver:
 				print (m)
 				it-=1
 			return l
+                if method=='newtonraphson':
+			x=float(input('Enter value for initialisation: '))
+			max_iterations=int(input('Enter maximum number of iterations: '))
+			tolerance=float(input('Enter tolerance: '))
+			def derivative(x):
+				sum=0
+				for i in range(1,order+1):
+					sum+=(coeffs[i-1]*(order+1-i)*(x**(order-i)))
+				return sum
+			def newtonraphsonmethod(f,x,max_iterations=20,tolerance=0.000001):
+				for i in range(max_iterations):
+					x1=x-(f(x)/derivative(x))
+					if abs(x1-x)<tolerance:
+						break
+					x=x1
+					print(x)
+				return x
+			return newtonraphsonmethod(f,x,max_iterations,tolerance)
+		else:
+			return NULL
