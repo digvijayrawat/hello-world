@@ -1,0 +1,59 @@
+class LinearSystemSolver:
+    def lineara(self,m,n):
+        from numpy import zeros,array
+        a_=zeros((m,n),float)
+        for i in range(m):
+            for j in range(n):
+                a_[i,j]=float(input('Give value at position a['+str(i+1)+']['+str
+
+(j+1)+']  '))
+        return a_
+    def linearb(self,m):
+        from numpy import zeros,array
+        b_=zeros((m),int)
+        for i in range(m):
+            b_[i]=int(input('Give value at position b['+str(i+1)+']  '))
+        return b_
+    def concat(self,m,n,a,b):
+        from numpy import zeros,array
+        c_=zeros((m,n+1),float)
+        for i in range(m):
+            for j in range(n):
+                c_[i,j]=a[i,j]
+        for i in range(m):
+            c_[i,n]=b[i]
+        return c_
+    def bsubs(m,n,c):
+        p_=zeros((m),float)
+        for i in range(m-1,-1,-1):
+            p_[i]=c[i,n]
+            for j in range(i+1,n):
+                p_[i]-=c[i,j]*p_[j]
+            p_[i]=p_[i]/c[i,i]
+        return p_
+    def pivot(m,n,c):
+        for i in range(0,n):
+            if c[i,i]==0:
+                for j in range(i+1,m):
+                    if c[j,i]!=0:
+                        q=c[i].copy()
+                        c[i],c[j]=c[j],q
+        return(c)
+    def solve(self,method):
+
+        if method=='gauss':
+
+            m,n=int(input('row ')),int(input('column'))
+            a=self.lineara(m,n)
+            b=self.linearb(m)
+            c=self.concat(m,n,c,b)
+            c=self.pivot(m,n,c)
+
+            for k in range(i+1,m):
+                t=c[k,i]/c[i,i]
+                if t!=0:
+                    for d  in range(0,n+1):
+                        c[k,d]-=t*c[i,d]
+
+                p=self.bsubs(m,n,c)
+                return(p)
