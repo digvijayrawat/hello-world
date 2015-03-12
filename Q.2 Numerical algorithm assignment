@@ -57,3 +57,51 @@ class LinearSystemSolver:
 
                 p=self.bsubs(m,n,c)
                 return(p)
+        if method=='gauss-jordan':
+
+            m,n=int(input('row ')),int(input('column'))
+            a=self.lineara(m,n)
+            b=self.linearb(m)
+            c=self.concat(m,n,a,b)
+            c=self.pivot(m,n,c)
+
+            for i in range(0,n):
+                for k in range(0,n):
+                    if k!=i:
+                        r=c[k,i]/c[i,i]
+                        if r!=0:
+                            for d  in range(0,n+1):
+                                c[k,d]-=r*c[i,d]
+
+            p=self.bsubs(m,n,c)
+            return(p)
+
+
+        elif method =='gauss-siedel':
+
+            import numpy as np
+            n=int(input('order'))
+            a=self.lineara(n,n)
+            b=self.linearb(n)
+            epsilon,f,g,h=np.zeros(n),np.zeros(n),np.zeros(n),np.zeros(n)
+            for i in range(n) :
+                epsilon[i]=.0000001                  
+            iterlimit=20                                     
+
+            for i in range(n):
+                for j in range(n):
+                    if i==j:
+                        f[i,j]=a[i,j]
+                    elif i>j:
+                        g[i,j]=a[i,j]
+            h=a-g-f
+
+            for i in range(iterlimit):
+                if np.greater(abs(np.dot(a,p)-b),eps).any():
+                    m=- (np.dot(np.linalg.inv(g+f), b + np.dot(h, p)))
+                    p=m
+                else:
+                    break
+            return(p)
+
+        
